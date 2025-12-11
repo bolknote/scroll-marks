@@ -58,6 +58,15 @@
       line-height: 1.6;
     }
     
+    .hero .browser-note {
+      font-size: 0.85rem;
+      opacity: 0.5;
+      margin-top: 1.5rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+    }
+    
     .scroll-hint {
       margin-top: 3rem;
       opacity: 0.5;
@@ -228,6 +237,9 @@
       A library to colorize the scrollbar based on element positions.
       Scroll down and watch the scrollbar on the right — it changes color!
     </p>
+    <p class="browser-note">
+      Works in Chrome and Chromium-based browsers (Edge, Opera, Brave). Desktop only.
+    </p>
     <div class="scroll-hint">↓ Scroll down ↓</div>
   </div>
 
@@ -322,8 +334,6 @@
         scrollbarWidth: 16
       });
       
-      console.log('ScrollMarks v' + ScrollMarks.VERSION + ' initialized');
-      console.log('Instance ID:', scrollMark.getId());
       
       // Make addSection available globally
       window.addSection = function() {
