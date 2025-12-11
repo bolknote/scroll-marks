@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScrollMarks Demo</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    
+    body {
+      font-family: 'Space Mono', monospace;
+      background: linear-gradient(135deg, #0d0d0d 0%, #1a1a2e 50%, #0d0d0d 100%);
+      color: #e0e0e0;
+      min-height: 100vh;
+    }
+    
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      background: 
+        radial-gradient(ellipse at 20% 80%, rgba(120, 0, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(255, 0, 120, 0.1) 0%, transparent 50%);
+    }
+    
+    .hero h1 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradient-shift 8s ease infinite;
+      margin-bottom: 1rem;
+    }
+    
+    @keyframes gradient-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    .hero p {
+      font-size: 1.1rem;
+      opacity: 0.7;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+    
+    .scroll-hint {
+      margin-top: 3rem;
+      opacity: 0.5;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+    
+    .section {
+      padding: 4rem 2rem;
+      min-height: 50vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0.03;
+      background-image: 
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 50px,
+          currentColor 50px,
+          currentColor 51px
+        );
+    }
+    
+    .section-content {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .section h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .section h2 .color-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      box-shadow: 0 0 20px currentColor;
+    }
+    
+    .section p {
+      font-size: 1rem;
+      line-height: 1.8;
+      opacity: 0.8;
+    }
+    
+    /* Red section */
+    .section.red {
+      color: #ff6b6b;
+    }
+    .section.red .color-dot {
+      background: #ff6b6b;
+    }
+    
+    /* Yellow section */
+    .section.yellow {
+      color: #feca57;
+    }
+    .section.yellow .color-dot {
+      background: #feca57;
+    }
+    
+    /* Cyan section */
+    .section.cyan {
+      color: #48dbfb;
+    }
+    .section.cyan .color-dot {
+      background: #48dbfb;
+    }
+    
+    /* Pink section */
+    .section.pink {
+      color: #ff9ff3;
+    }
+    .section.pink .color-dot {
+      background: #ff9ff3;
+    }
+    
+    /* Green section */
+    .section.green {
+      color: #1dd1a1;
+    }
+    .section.green .color-dot {
+      background: #1dd1a1;
+    }
+    
+    .spacer {
+      height: 30vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.3;
+      font-size: 0.9rem;
+    }
+    
+    .footer {
+      padding: 4rem 2rem;
+      text-align: center;
+      opacity: 0.5;
+      font-size: 0.85rem;
+    }
+    
+    .controls {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      background: rgba(0,0,0,0.8);
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+    }
+    
+    .controls button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .controls button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <h1>ScrollMarks</h1>
+    <p>
+      A library to colorize the scrollbar based on element positions.
+      Scroll down and watch the scrollbar on the right — it changes color!
+    </p>
+    <div class="scroll-hint">↓ Scroll down ↓</div>
+  </div>
+
+  <div class="section red" data-scroll-color="#ff6b6b">
+    <div class="section-content">
+      <h2><span class="color-dot"></span>Red Section</h2>
+      <p>
+        This section is marked with red color. Notice the scrollbar — 
+        it's also red at this position! This helps you visually navigate 
+        the page and quickly find the sections you need.
+      </p>
+    </div>
+  </div>
+
+  <div class="spacer">• • •</div>
+
+  <div class="section yellow" data-scroll-color="#feca57">
+    <div class="section-content">
+      <h2><span class="color-dot"></span>Yellow Section</h2>
+      <p>
+        Yellow catches attention. This section works like a bookmark.
+        The library automatically calculates the position and height 
+        of each element with the data-scroll-color attribute.
+      </p>
+    </div>
+  </div>
+
+  <div class="spacer">• • •</div>
+
+  <div class="section cyan" data-scroll-color="#48dbfb">
+    <div class="section-content">
+      <h2><span class="color-dot"></span>Cyan Section</h2>
+      <p>
+        Each color creates its own stop in the scrollbar gradient.
+        When the window or content size changes, the scrollbar automatically 
+        updates thanks to ResizeObserver and MutationObserver.
+      </p>
+    </div>
+  </div>
+
+  <div class="spacer">• • •</div>
+
+  <div class="section pink" data-scroll-color="#ff9ff3">
+    <div class="section-content">
+      <h2><span class="color-dot"></span>Pink Section</h2>
+      <p>
+        You can use any CSS color: hex, rgb, rgba, hsl, 
+        or even named colors like "pink" or "coral".
+        The library simply passes the value to the CSS gradient.
+      </p>
+    </div>
+  </div>
+
+  <div class="spacer">• • •</div>
+
+  <div class="section green" data-scroll-color="#1dd1a1">
+    <div class="section-content">
+      <h2><span class="color-dot"></span>Green Section</h2>
+      <p>
+        This is the last section. Try resizing the browser window — 
+        the scrollbar will update automatically. You can also dynamically 
+        add new elements with data-scroll-color.
+      </p>
+    </div>
+  </div>
+
+  <div class="spacer">• • •</div>
+
+  <div class="footer">
+    <p>ScrollMarks — Made with ❤️</p>
+  </div>
+
+  <div class="controls">
+    <button onclick="addSection()">+ Add Section</button>
+  </div>
+
+  <!-- Development: use src/ directly -->
+  <script type="module">
+    import { ScrollMarks } from './src/scroll-marks.js';
+    window.ScrollMarks = ScrollMarks;
+    window.dispatchEvent(new Event('scrollmarks-loaded'));
+  </script>
+  <!-- Production: use dist/scroll-marks.min.js -->
+  <!-- <script src="dist/scroll-marks.min.js"></script> -->
+  <script type="module">
+    // Wait for ScrollMarks to load
+    function init() {
+      const scrollMark = new ScrollMarks({
+        trackColor: '#1a1a2e',
+        thumbColor: 'rgba(255,255,255,0.35)',
+        scrollbarWidth: 16
+      });
+      
+      console.log('ScrollMarks v' + ScrollMarks.VERSION + ' initialized');
+      console.log('Instance ID:', scrollMark.getId());
+      
+      // Make addSection available globally
+      window.addSection = function() {
+        const colors = ['#e74c3c', '#9b59b6', '#3498db', '#2ecc71', '#f39c12', '#e91e63'];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        const section = document.createElement('div');
+        section.className = 'section';
+        section.style.color = randomColor;
+        section.setAttribute('data-scroll-color', randomColor);
+        
+        section.innerHTML = `
+          <div class="section-content">
+            <h2><span class="color-dot" style="background: ${randomColor}"></span>New Section</h2>
+            <p>
+              This section was added dynamically! Notice how the scrollbar 
+              automatically updated to show the new mark.
+              MutationObserver tracks the addition of new elements.
+            </p>
+          </div>
+        `;
+        
+        const footer = document.querySelector('.footer');
+        footer.parentNode.insertBefore(section, footer);
+        
+        const spacer = document.createElement('div');
+        spacer.className = 'spacer';
+        spacer.textContent = '• • •';
+        footer.parentNode.insertBefore(spacer, footer);
+        
+        section.scrollIntoView({ behavior: 'smooth' });
+      };
+    }
+    
+    if (window.ScrollMarks) {
+      init();
+    } else {
+      window.addEventListener('scrollmarks-loaded', init);
+    }
+
+  </script>
+</body>
+</html>

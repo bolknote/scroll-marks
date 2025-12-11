@@ -1,0 +1,55 @@
+{
+  "name": "scroll-marks",
+  "version": "1.0.0",
+  "description": "A library to colorize the scrollbar based on element positions",
+  "main": "dist/scroll-marks.js",
+  "module": "dist/scroll-marks.esm.js",
+  "browser": "dist/scroll-marks.min.js",
+  "types": "dist/scroll-marks.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/scroll-marks.esm.js",
+      "require": "./dist/scroll-marks.js",
+      "browser": "./dist/scroll-marks.min.js",
+      "types": "./dist/scroll-marks.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "node scripts/build.js",
+    "dev": "python3 -m http.server 8080",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "keywords": [
+    "scrollbar",
+    "scroll",
+    "marker",
+    "indicator",
+    "navigation",
+    "css",
+    "gradient",
+    "colorize"
+  ],
+  "author": "Evgeny Stepanischev (https://github.com/bolknote)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bolknote/scroll-marks.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bolknote/scroll-marks/issues"
+  },
+  "homepage": "https://github.com/bolknote/scroll-marks#readme",
+  "devDependencies": {
+    "esbuild": "^0.20.0",
+    "vitest": "^1.2.0",
+    "jsdom": "^24.0.0",
+    "@vitest/coverage-v8": "^1.2.0"
+  }
+}
