@@ -1,8 +1,11 @@
 name: Publish to npm
 
 on:
-  release:
-    types: [published]
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'package.json'
 
 jobs:
   publish:
@@ -16,17 +19,36 @@ jobs:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
 
+      - name: Check if version already published
+        id: check
+        run: |
+          PKG_NAME=$(node -p "require('./package.json').name")
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          echo "name=$PKG_NAME" >> $GITHUB_OUTPUT
+          echo "version=$PKG_VERSION" >> $GITHUB_OUTPUT
+          
+          if npm view "$PKG_NAME@$PKG_VERSION" version 2>/dev/null; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Version $PKG_VERSION already published, skipping"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Version $PKG_VERSION not published yet"
+          fi
+
       - name: Install dependencies
+        if: steps.check.outputs.exists == 'false'
         run: npm ci
 
       - name: Run tests
+        if: steps.check.outputs.exists == 'false'
         run: npm test
 
       - name: Build
+        if: steps.check.outputs.exists == 'false'
         run: npm run build
 
       - name: Publish to npm
+        if: steps.check.outputs.exists == 'false'
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
