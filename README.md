@@ -231,7 +231,9 @@ document.body.appendChild(section);
 - Safari 10.1+
 - Edge 79+
 
-Note: Firefox uses standard scrollbar styling which has limited gradient support. The library falls back to solid colors in Firefox.
+**Note:** Firefox uses standard scrollbar styling which has limited gradient support. The library falls back to solid colors in Firefox.
+
+**Note:** Mobile browsers hide scrollbars by default and don't support custom scrollbar styling. This library is designed for desktop browsers.
 
 ## TypeScript
 
@@ -251,5 +253,5 @@ const marks: ColorMark[] = scrollMarks.getMarks();
 
 ## License
 
-MIT © 2024
+MIT © 2025 Evgeny Stepanischev
 
