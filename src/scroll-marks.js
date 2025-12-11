@@ -259,8 +259,12 @@ export class ScrollMarks {
     state.styleElement.textContent = `
 ::-webkit-scrollbar {
   width: ${w}px;
+  height: ${w}px;
 }
 ::-webkit-scrollbar-track {
+  background: ${config.trackColor};
+}
+::-webkit-scrollbar-track:vertical {
   background: ${gradient};
 }
 ::-webkit-scrollbar-thumb {
