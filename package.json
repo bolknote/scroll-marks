@@ -1,6 +1,6 @@
 {
   "name": "@bolknote/scroll-marks",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A library to colorize the scrollbar based on element positions",
   "main": "dist/scroll-marks.js",
   "module": "dist/scroll-marks.esm.js",
