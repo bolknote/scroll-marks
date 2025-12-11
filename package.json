@@ -46,6 +46,9 @@
     "url": "https://github.com/bolknote/scroll-marks/issues"
   },
   "homepage": "https://github.com/bolknote/scroll-marks#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "esbuild": "^0.20.0",
     "vitest": "^1.2.0",
