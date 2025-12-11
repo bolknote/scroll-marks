@@ -6,6 +6,8 @@ A lightweight JavaScript library to colorize the scrollbar based on element posi
 ![Size](https://img.shields.io/badge/size-~3kb-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
+<img width="1512" height="948" src="https://github.com/user-attachments/assets/cb1a2b5c-a91a-43b0-9654-22210dcb995c" />
+
 ## Features
 
 - 🎨 **Color markers** — Highlight sections on the scrollbar with custom colors
