@@ -20,7 +20,7 @@ A lightweight JavaScript library to colorize the scrollbar based on element posi
 ### Via npm
 
 ```bash
-npm install scroll-marks
+npm install @bolknote/scroll-marks
 ```
 
 ### Via CDN
@@ -29,21 +29,21 @@ npm install scroll-marks
 
 ```html
 <!-- Latest version -->
-<script src="https://unpkg.com/scroll-marks"></script>
+<script src="https://unpkg.com/@bolknote/scroll-marks"></script>
 
 <!-- Specific version (recommended for production) -->
-<script src="https://unpkg.com/scroll-marks@1.0.0/dist/scroll-marks.min.js"></script>
+<script src="https://unpkg.com/@bolknote/scroll-marks@1.0.0/dist/scroll-marks.min.js"></script>
 
 <!-- ES Module -->
 <script type="module">
-  import { ScrollMarks } from 'https://unpkg.com/scroll-marks/dist/scroll-marks.esm.js';
+  import { ScrollMarks } from 'https://unpkg.com/@bolknote/scroll-marks/dist/scroll-marks.esm.js';
 </script>
 ```
 
 Alternative CDNs:
 ```html
 <!-- jsDelivr -->
-<script src="https://cdn.jsdelivr.net/npm/scroll-marks/dist/scroll-marks.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@bolknote/scroll-marks/dist/scroll-marks.min.js"></script>
 ```
 
 ### Manual download
@@ -104,7 +104,7 @@ const scrollMarks = new ScrollMarks({
 ### CommonJS
 
 ```javascript
-const ScrollMarks = require('scroll-marks');
+const ScrollMarks = require('@bolknote/scroll-marks');
 
 const scrollMarks = new ScrollMarks();
 ```
@@ -238,7 +238,7 @@ Note: Firefox uses standard scrollbar styling which has limited gradient support
 TypeScript definitions are included:
 
 ```typescript
-import { ScrollMarks, ScrollMarksOptions, ColorMark } from 'scroll-marks';
+import { ScrollMarks, ScrollMarksOptions, ColorMark } from '@bolknote/scroll-marks';
 
 const options: ScrollMarksOptions = {
   trackColor: '#1a1a2e',
